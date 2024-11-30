@@ -1,0 +1,81 @@
+name: Cargo Check
+on:
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  check-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: clippy
+
+      - name: Cache Packages
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: clippy
+
+      - name: Check build
+        run: cargo clippy
+        
+  check-build-notimings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: clippy
+
+      - name: Cache Packages
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: clippy-notimings
+
+      - name: Check build
+        run: cargo clippy
+        env:
+          RUSTFLAGS: "-cfg hide_server_timings"
+
+  check-fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rustfmt
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+  check-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@nightly
+
+      - name: Check formatting
+        run: cargo doc
+        env:
+          RUSTFLAGS: "-D warnings"
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@nightly
+
+      - name: Cache Packages
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: tests
+
+      - name: Run tests
+        run: cargo test --all

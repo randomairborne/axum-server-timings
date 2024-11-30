@@ -1,0 +1,21 @@
+[package]
+name = "axum-server-timings"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Simplify adding the server-timings header to your Axum applications"
+repository = "https://github.com/randomairborne/axum-server-timings"
+readme = "README.md"
+keywords = ["axum", "server-timing"]
+categories = ["development-tools::profiling", "network-programming"]
+
+[dependencies]
+axum-core = "0.4"
+http = "1"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }
+axum = "0.7"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(hide_server_timings)'] }
