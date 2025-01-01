@@ -15,7 +15,7 @@ http = "1"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
-axum = "0.7"
+axum = "0.8"
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(hide_server_timings)'] }
