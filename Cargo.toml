@@ -1,6 +1,6 @@
 [package]
 name = "axum-server-timings"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license = "MIT"
 description = "Simplify adding the server-timings header to your Axum applications"
